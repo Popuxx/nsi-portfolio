@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paul — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F6F3;
+      --surface: #FFFFFF;
+      --text: #1A1A18;
+      --muted: #6B6B65;
+      --accent: #2D5BE3;
+      --border: #E2E0D8;
+      --tag-bg: #EEF2FD;
+      --tag-text: #2D5BE3;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(247, 246, 243, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 5vw;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 5vw 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-text {}
+    .hero-eyebrow {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(48px, 6vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-desc {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 36px;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--text);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .hero-cta:hover { background: var(--accent); transform: translateY(-1px); }
+    .hero-cta-arrow { font-size: 18px; transition: transform 0.2s; }
+    .hero-cta:hover .hero-cta-arrow { transform: translateX(3px); }
+
+    /* AVATAR CARD */
+    .avatar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      animation: fadeUp 0.7s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2D5BE3, #7B9FF5);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .card-info-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .card-name { font-size: 18px; font-weight: 500; }
+    .card-role { font-size: 14px; color: var(--muted); margin-top: 2px; }
+    .card-divider { height: 1px; background: var(--border); }
+    .card-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .stat { }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: var(--text);
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+
+    /* SECTIONS */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 5vw;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 4vw, 44px);
+      letter-spacing: -1px;
+      margin-bottom: 48px;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .about-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--muted);
+    }
+    .about-text p + p { margin-top: 16px; }
+    .about-highlights { display: flex; flex-direction: column; gap: 16px; }
+    .highlight-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .highlight-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: var(--tag-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .highlight-title { font-size: 15px; font-weight: 500; margin-bottom: 3px; }
+    .highlight-sub { font-size: 13px; color: var(--muted); }
+
+    /* COMPÉTENCES */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .skill-card-title { font-size: 15px; font-weight: 500; margin-bottom: 16px; }
+    .skill-bars { display: flex; flex-direction: column; gap: 12px; }
+    .skill-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .bar-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 100px;
+      transform-origin: left;
+      animation: grow 1s ease both;
+    }
+    @keyframes grow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    /* PROJETS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .project-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .project-title { font-size: 18px; font-weight: 500; margin-bottom: 10px; }
+    .project-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .project-tag {
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--bg);
+      color: var(--muted);
+      padding: 4px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+    }
+
+    /* CONTACT */
+    .contact-section {
+      background: var(--text);
+      border-radius: 28px;
+      padding: 64px;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto 80px;
+    }
+    .contact-section h2 {
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .contact-section p {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 36px;
+    }
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .contact-btn:hover { background: var(--tag-bg); color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero-inner, .about-grid, .skills-grid { grid-template-columns: 1fr; gap: 40px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .avatar-card { padding: 28px; }
+      .contact-section { padding: 40px 24px; }
+    }
+
+    /* SCROLL ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Paul.</a>
+    <ul class="nav-links">
+      <li><a href="#skills">Compétences</a></li>
+      <li><a href="#projects">Projets</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- BANDEAU -->
+  <div style="padding: 100px 5vw 60px; text-align: center;">
+    <p style="font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;">NSI Première 2025-2026</p>
+    <h1 style="font-family: 'DM Serif Display', serif; font-size: clamp(40px, 6vw, 68px); letter-spacing: -1.5px; line-height: 1.05; color: var(--text);">Mes projets Python</h1>
+  </div>
+
+  <!-- COMPÉTENCES -->
+  <section id="skills" style="background: var(--surface); border-radius: 28px; margin: 0 5vw;">
+    <p class="section-label reveal" style="text-align:center;">Compétences</p>
+    <h2 class="reveal" style="text-align:center;">Ce que je sais faire</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Code Python</div>
+        <div class="card-tags" style="margin-top: 8px;">
+          <span class="tag">Syntaxe & bases</span>
+          <span class="tag">Fonctions & modules</span>
+          <span class="tag">Turtle & graphique</span>
+          <span class="tag">Listes, boucles & dictionnaires</span>
+          <span class="tag">Fichiers</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Traduction de binaires</div>
+        <div class="card-tags" style="margin-top: 8px;">
+          <span class="tag">Binaire ↔ Décimal</span>
+          <span class="tag">Hexadécimal</span>
+          <span class="tag">Opérations bit à bit</span>
+          <span class="tag">Codage ASCII</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Algorithmique & complexité</div>
+        <div class="card-tags" style="margin-top: 8px;">
+          <span class="tag">Algorithmes de tri</span>
+          <span class="tag">Complexité O(n)</span>
+          <span class="tag">Recherche dichotomique</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJETS -->
+  <section id="projects">
+    <p class="section-label reveal" style="text-align:center;">Projets</p>
+    <h2 class="reveal" style="text-align:center;">Mes réalisations</h2>
+    <div class="projects-grid">
+      <div class="project-card reveal" style="border-color: var(--accent); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 16px; right: 16px; background: #FFF3CD; color: #856404; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 100px; letter-spacing: 0.5px;">🏆 Trophées NSI — Prix de l'originalité</div>
+        <div class="project-number" style="margin-top: 8px;">01</div>
+        <div class="project-title">Projet Carnet de Santé</div>
+        <div class="project-desc">Application imaginée pour faciliter le quotidien des vétérinaires : suivi médical des animaux, historique des consultations, rappels de vaccins et gestion des ordonnances. Un outil concret, pensé en équipe de quatre, qui a séduit le jury des Trophées NSI par son utilité réelle et son ingéniosité.</div>
+        <div class="project-tags" style="margin-bottom: 12px;">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Base de données</span>
+          <span class="project-tag">Travail d'équipe</span>
+          <span class="project-tag">Projet primé</span>
+        </div>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">⚠️ Nécessite le module <strong>nsi_ui</strong> pour être lancé.</p>
+        <a href="1780643070267_sante_animale.py" download="Carnet_de_sante.py" style="display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:500; color:var(--accent); text-decoration:none; border:1px solid var(--accent); padding:8px 16px; border-radius:100px; transition:background 0.2s, color 0.2s;" onmouseover="this.style.background='var(--tag-bg)'" onmouseout="this.style.background='transparent'">⬇ Télécharger le code source</a>
+        <p style="font-size:12px; color:var(--muted); margin-top:12px;">Réalisé par <strong>Manel</strong>, <strong>Yanis</strong>, <strong>Mathias</strong> &amp; <strong>Paul</strong></p>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-number">02</div>
+        <div class="project-title">Turtle NFT Art</div>
+        <div class="project-desc">Reproduction fidèle d'une œuvre existante grâce au module Turtle de Python. Réalisé en équipe de quatre, chaque case de la grille a été conçue par un membre différent — la preuve qu'esthétique et code peuvent se rejoindre dans la plus grande simplicité.</div>
+        <div class="project-tags" style="margin-bottom: 16px;">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Turtle</span>
+          <span class="project-tag">Art génératif</span>
+          <span class="project-tag">Travail d'équipe</span>
+        </div>
+        <a href="1780642738451_projet_n1.py" download="Turtle_NFT_Art.py" style="display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:500; color:var(--accent); text-decoration:none; border:1px solid var(--accent); padding:8px 16px; border-radius:100px; transition:background 0.2s, color 0.2s;" onmouseover="this.style.background='var(--tag-bg)'" onmouseout="this.style.background='transparent'">⬇ Télécharger le code source</a>
+        <p style="font-size:12px; color:var(--muted); margin-top:12px;">Réalisé par <strong>Paul</strong>, <strong>Manel</strong>, <strong>Santiago</strong> &amp; <strong>Jacques</strong></p>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-number">03</div>
+        <div class="project-title">Activités Python</div>
+        <div class="project-desc">Une série d'exercices et de mini-projets réalisés en Python tout au long de l'année : le classique <em>Jeu du Pendu</em> avec gestion des erreurs et dictionnaire de mots, et <em>La Rosa Turtle</em>, une fleur géométrique dessinée pas à pas avec le module graphique Turtle.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Jeu du Pendu</span>
+          <span class="project-tag">La Rosa Turtle</span>
+          <span class="project-tag">Turtle</span>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-number">04</div>
+        <div class="project-title">Et pas que du Python !</div>
+        <div class="project-desc">La NSI, c'est aussi comprendre les fondements de l'informatique : conversion binaire et hexadécimale, logique booléenne, et découverte des composants matériels d'un ordinateur — processeur, mémoire, carte mère. Autant de notions essentielles pour saisir comment une machine fonctionne vraiment.</div>
+        <div class="project-tags">
+          <span class="project-tag">Binaire</span>
+          <span class="project-tag">Hexadécimal</span>
+          <span class="project-tag">Architecture</span>
+          <span class="project-tag">Matériel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p style="margin-bottom: 6px;">© 2025 — Réalisé par <strong>Paul</strong>, <strong>Manel</strong>, <strong>Santiago</strong> &amp; <strong>Jacques</strong></p>
+    <p style="font-size: 12px; color: var(--muted);">Page conçue à l'aide de l'IA <strong>Claude</strong> (Anthropic)</p>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
